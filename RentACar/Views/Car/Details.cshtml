@@ -1,0 +1,51 @@
+﻿@model RentACar.Models.Car
+
+
+<section>
+	<div class="container p-5">
+		<div class="row">
+			<div class="col-md-6 p-md-0">
+				<div class="car-detail text-white p-5">
+					<div class="car-card-head">
+						<h3>@Model.Make @Model.Model</h3>
+					</div>
+					<div class="car-card-body">
+						<img src="~/images/cars/@Model.ImageUrl" alt="@Model.Make @Model.Model" class="card-img-top">
+						<div class="d-flex justify-content-between ">
+							<p class="price fw-bold d-flex align-items-center mt-3">$@Model.PricePerDay / day</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6 p-md-0">
+				<div class="car-description p-5">
+					<p><strong>Price per day:</strong> @Model.PricePerDay</p>
+					<p><strong>Availability:</strong> @(Model.IsAvailable ? "Available" : "Currently Unavailable")</p>
+
+					<h3>Specifications</h3>
+					<ul>
+						<li><strong>Make:</strong> @Model.Make</li>
+						<li><strong>Model:</strong> @Model.Model</li>
+						<li><strong>Year:</strong> @Model.Year</li>
+						<li><strong>Fuel Type:</strong> @Model.FuelType</li>
+						<li><strong>Seats:</strong> @Model.Seats</li>
+					</ul>
+
+					@if (Model.IsAvailable)
+					{
+						<form asp-action="Book">
+							<input type="hidden" name="CarId" value="@Model.CarId"></input>
+							<button type="submit" class="btn-book">Book this car</button>
+						</form>
+					}
+					else
+					{
+						<p>This car is currently unavailable for booking</p>
+					}
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>

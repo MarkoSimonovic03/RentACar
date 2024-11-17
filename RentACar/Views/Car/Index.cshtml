@@ -1,0 +1,140 @@
+﻿@model IEnumerable<RentACar.Models.Car>
+
+@{
+	ViewData["Title"] = "RentACar";
+}
+
+
+<section>
+	<div class="container p-5">
+		<div class="row">
+			@* <form method="get" asp-controller="Car" asp-action="Index" class="col-md-4 col-lg-3">
+			<div class="mb-3">
+			<label for="make" class="form-label">Make:</label>
+			<input type="text" class="form-control" name="make" id="make" value="@Context.Request.Query["make"]" />
+			</div>
+
+			<div class="mb-3">
+			<label for="model">Model:</label>
+			<input type="text" class="form-control" name="model" id="model" value="@Context.Request.Query["model"]" />
+			</div>
+
+			<div class="mb-3">
+			<label for="minPrice" class="form-label">Min Price:</label>
+			<input type="number" class="form-control" name="minPrice" id="minPrice" min="0" value="@Context.Request.Query["minPrice"]" />
+			</div>
+
+			<div class="mb-3">
+			<label for="maxPrice" class="form-label">Max Price:</label>
+			<input type="number" class="form-control" name="maxPrice" id="maxPrice" min="0" value="@Context.Request.Query["maxPrice"]" />
+			</div>
+
+			<button type="submit" class="btn btn-primary w-100">Search</button>
+
+			</form> *@
+
+			@* <form method="get" asp-controller="Car" asp-action="Index" class="row">
+			<div class="col-md-4 col-lg-2">
+			<label for="make" class="">Make:</label>
+			<input type="text" class="form-control" name="make" id="make" value="@Context.Request.Query["make"]" />
+			</div>
+
+			<div class="col-md-4 col-lg-2">
+			<label for="model" class="">Model:</label>
+			<input type="text" class="form-control" name="model" id="model" value="@Context.Request.Query["model"]" />
+			</div>
+
+			<div class="col-md-4 d-none d-md-block d-lg-none"></div>
+
+			<div class="col-md-4  col-lg-2 offset-lg-0">
+			<label for="minPrice" class="">Min Price:</label>
+			<input type="number" class="form-control" name="minPrice" id="minPrice" min="0" value="@Context.Request.Query["minPrice"]" />
+			</div>
+
+			<div class="col-md-4 col-lg-2">
+			<label for="maxPrice" class="">Max Price:</label>
+			<input type="number" class="form-control" name="maxPrice" id="maxPrice" min="0" value="@Context.Request.Query["maxPrice"]" />
+			</div>
+
+			<div class="col-md-4 d-none d-md-block d-lg-none"></div>
+
+			<button type="submit" class="btn btn-primary col-md-4 col-lg-2">Search</button>
+
+			</form> *@
+
+			<form method="get" asp-controller="Car" asp-action="Index" class="row g-1">
+
+				<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
+					<label for="make" class="">Make</label>
+					<input type="text" class="" name="make" id="make" value="@Context.Request.Query["make"]" />
+
+				</div>
+
+				<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
+					<label for="model" class="">Model</label>
+					<input type="text" class="" name="model" id="model" value="@Context.Request.Query["model"]" />
+
+				</div>
+
+				<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
+					<label for="minPrice" class="">Min Price</label>
+					<input type="number" class="" name="minPrice" id="minPrice" min="0" value="@Context.Request.Query["minPrice"]" />
+
+				</div>
+
+				<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
+					<label for="maxPrice" class="">Max Price</label>
+					<input type="number" class="" name="maxPrice" id="maxPrice" min="0" value="@Context.Request.Query["maxPrice"]" />
+
+				</div>
+
+				<div class="col-md-4 col-lg-2">
+					<button type="submit" class="btn search-btn">
+						<i class="fas fa-search"></i>
+					</button>
+				</div>
+
+			</form>
+
+		</div>
+	</div>
+</section>
+
+<section>
+	<div class="container p-5">
+		@if (Model.Any())
+		{
+			<h1>Abailable Cars</h1>
+			<div class="row g-4">
+				@foreach (var car in Model)
+				{
+					<div class="col-xxl-3 col-lg-4 col-md-6 col-sm-12">
+
+						<div class="car-card-border">
+							<div class="car-card text-white p-4">
+								<div class="car-card-head">
+									<h3>@car.Make @car.Model</h3>
+								</div>
+								<div class="car-card-body">
+									<img src="~/images/cars/@car.ImageUrl" alt="@car.Make @car.Model" class="card-img-top">
+									<div class="d-flex justify-content-between mt-3">
+										<p class="price fw-bold d-flex align-items-center">$@car.PricePerDay/day</p>
+										<a href="@Url.Action("Details","Car", new{ id = car.CarId})" class="btn-custom d-flex align-items-center">View details</a>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+		}
+		else
+		{
+			<p>Currently, there are no available cars for this search...</p>
+		}
+	</div>
+</section>
+
+
+
