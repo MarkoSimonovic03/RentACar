@@ -1,0 +1,23 @@
+﻿@model RentACar.Models.Car
+
+
+<div class="col-xxl-3 col-lg-4 col-md-6 col-sm-12">
+	<div class="car-card-border">
+		<div class="car-card text-white p-4">
+			<div class="car-card-head">
+				<h3>@Model.Make @Model.Model</h3>
+			</div>
+
+			<div class="car-card-body">
+				@{
+					var img = @Model.ImageUrl != null || @Model.ImageUrl == "" ? @Model.ImageUrl : "car-placeholder.png";
+				}
+				<img src="~/images/cars/@img" alt="@Model.Make @Model.Model" class="card-img-top">
+				<div class="d-flex justify-content-between mt-3">
+					<p class="price fw-bold d-flex align-items-center">$@Model.PricePerDay/day</p>
+					<a href="@Url.Action("Details","Car", new{ id = Model.CarId})" class="btn-custom d-flex align-items-center">View details</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

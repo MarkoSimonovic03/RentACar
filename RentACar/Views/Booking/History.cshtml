@@ -1,0 +1,29 @@
+﻿@model IEnumerable<RentACar.Models.Booking>
+
+@{
+	ViewData["Title"] = "Booking Confirmation";
+}
+
+<h1>Your Booking History</h1>
+
+
+@if (!Model.Any())
+{
+	<p>You have no past bookings.</p>
+}
+else
+{
+	<div class="booking-history">
+		@foreach (var booking in Model)
+		{
+			<div class="booking-entry">
+				<h2>Booking Details</h2>
+				<p><strong>Start Date;:</strong> @booking.StartDate.ToShortDateString()</p>
+				<p><strong>End Date:</strong> @booking.EndDate.ToShortDateString()</p>
+				<p><strong>Total Price:</strong> @booking.TotalPrice</p>
+
+				@Html.Partial("_CarCard", booking.Car);
+			</div>
+		}
+	</div>
+}

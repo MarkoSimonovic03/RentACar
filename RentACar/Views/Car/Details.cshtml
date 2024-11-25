@@ -34,8 +34,9 @@
 
 					@if (Model.IsAvailable)
 					{
-						<form asp-action="Book">
-							<input type="hidden" name="CarId" value="@Model.CarId"></input>
+						<form asp-action="Create" asp-controller="Booking" method="get">
+							<input type="hidden" name="CarId" value="@Model.CarId" />
+							<input type="hidden" name="UserId" value="1" />
 							<button type="submit" class="btn-book">Book this car</button>
 						</form>
 					}

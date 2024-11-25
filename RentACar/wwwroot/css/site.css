@@ -1,10 +1,10 @@
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .search-btn {
@@ -26,6 +26,7 @@ body {
     transition: 0.3s;
     height: 100%;
 }
+
     .car-card-border:hover {
         border: 3px solid grey;
     }
@@ -39,9 +40,11 @@ body {
     flex-direction: column;
     justify-content: space-between
 }
+
 .price {
     margin: 0;
 }
+
 .btn-custom {
     border: 2px solid white;
     border-radius: 50px;
@@ -102,5 +105,6 @@ body {
     }
 
     .car-description {
-        border:none;
+        border: none;
     }
+}
