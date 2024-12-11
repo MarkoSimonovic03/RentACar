@@ -1,58 +1,67 @@
-﻿@model IEnumerable<RentACar.Models.Car>
+﻿@model RentACar.Models.ViewModels.CarIndexViewModel
 
 @{
 	ViewData["Title"] = "RentACar";
 }
 
-<section>
-	<div class="container p-5">
-		<div class="row">
-			<form method="get" asp-controller="Car" asp-action="Index" class="row g-1">
-				<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
-					<label for="make" class="">Make</label>
-					<input type="text" class="" name="make" id="make" value="@Context.Request.Query["make"]" />
-				</div>
+<form method="get" asp-controller="Car" asp-action="Index">
+	<section>
+		<div class="container p-5">
+			<div class="row">
+				<div class="row g-1">
+					<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
+						<label for="make" class="">Make</label>
+						<input type="text" class="" name="make" id="make" value="@Context.Request.Query["make"]" />
+					</div>
 
-				<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
-					<label for="model" class="">Model</label>
-					<input type="text" class="" name="model" id="model" value="@Context.Request.Query["model"]" />
-				</div>
+					<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
+						<label for="model" class="">Model</label>
+						<input type="text" class="" name="model" id="model" value="@Context.Request.Query["model"]" />
+					</div>
 
-				<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
-					<label for="minPrice" class="">Min Price</label>
-					<input type="number" class="" name="minPrice" id="minPrice" min="0" value="@Context.Request.Query["minPrice"]" />
-				</div>
+					<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
+						<label for="minPrice" class="">Min Price</label>
+						<input type="number" class="" name="minPrice" id="minPrice" min="0" value="@Context.Request.Query["minPrice"]" />
+					</div>
 
-				<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
-					<label for="maxPrice" class="">Max Price</label>
-					<input type="number" class="" name="maxPrice" id="maxPrice" min="0" value="@Context.Request.Query["maxPrice"]" />
-				</div>
+					<div class="col-lg-2 d-flex flex-sm-row flex-lg-column">
+						<label for="maxPrice" class="">Max Price</label>
+						<input type="number" class="" name="maxPrice" id="maxPrice" min="0" value="@Context.Request.Query["maxPrice"]" />
+					</div>
 
-				<div class="col-md-4 col-lg-2">
-					<button type="submit" class="btn search-btn">
-						<i class="fas fa-search"></i>
-					</button>
+					<div class="col-md-4 col-lg-2">
+						<button type="submit" class="btn search-btn">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
 				</div>
-			</form>
-		</div>
-	</div>
-</section>
-
-<section>
-	<div class="container p-5">
-		@if (Model.Any())
-		{
-			<h1>Abailable Cars</h1>
-			<div class="row g-4">
-				@foreach (var car in Model)
-				{
-					@Html.Partial("_CarCard", car);
-				}
 			</div>
-		}
-		else
-		{
-			<p>Currently, there are no available cars for this search...</p>
-		}
-	</div>
-</section>
+		</div>
+	</section>
+
+	<section>
+		<div class="container p-5">
+			@if (Model.Cars.Any())
+			{
+				<h1>Abailable Cars</h1>
+				<div class="row g-4">
+					@foreach (var car in Model.Cars)
+					{
+						<div class="col-xxl-3 col-lg-4 col-md-6 col-sm-12">
+							<div class="car-card-border">
+								@Html.Partial("_CarCard", car)
+							</div>
+						</div>
+					}
+				</div>
+			}
+			else
+			{
+				<p>Currently, there are no available cars for this search...</p>
+			}
+		</div>
+	</section>
+
+	@Html.Partial("_Pagination", Model.Pagination)
+</form>
+

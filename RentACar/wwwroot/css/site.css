@@ -99,6 +99,33 @@ body {
         color: white;
     }
 
+#prev, #next {
+    border: 3px solid #295a5b;
+    color: #295a5b;
+    font-weight:bold;
+}
+
+.btn-page {
+    border: none;
+    background-color: transparent;
+    font-size: 1.4rem;
+    border-bottom: 3px solid transparent;
+    font-weight: bold;
+    color:grey;
+}
+    .btn-page:hover {
+        border-bottom: 3px solid #295a5b;
+        color: #295a5b;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+.current-page {
+    border-bottom: 3px solid #295a5b;
+    color: #295a5b;
+    font-weight: bold;
+}
+
 @media(max-width: 768px) {
     .car-detail {
         border-radius: 20px;

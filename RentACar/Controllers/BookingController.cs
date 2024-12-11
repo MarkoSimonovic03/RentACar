@@ -1,16 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentACar.Models;
+using RentACar.Models.ViewModels;
+using RentACar.Services;
 using RentACar.Util;
 
 namespace RentACar.Controllers
 {
 	public class BookingController : Controller
 	{
+		private readonly IBookingService _bookingService;
+		private readonly ICarCervice _carService;
+
+		public BookingController(IBookingService bookingService, ICarCervice carService)
+		{
+			_bookingService = bookingService;
+			_carService = carService;
+		}
+
 		public IActionResult Create(int carId, int userId)
 		{
-			var cars = Garage.GenerateCars();
-
-			var car = cars.Single(c => c.CarId == carId);
+			var car = _carService.GetCarById(carId);
 
 			if (car == null || !car.IsAvailable)
 			{
@@ -24,8 +33,7 @@ namespace RentACar.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Create(Booking booking)
 		{
-			var cars = Garage.GenerateCars();
-			var car = cars.SingleOrDefault(c => c.CarId == booking.CarId);
+			var car = _carService.GetCarById(booking.CarId);
 
 			if (car == null || !car.IsAvailable)
 			{
@@ -46,22 +54,44 @@ namespace RentACar.Controllers
 
 		public IActionResult Confirmation(int bookingId)
 		{
-			var bookings = Garage.GenerateBookings();
-			var booking = bookings.SingleOrDefault(b => b.BookingId == bookingId);
+			var booking = _bookingService.GetBookingById(bookingId);
 
 			if (booking == null)
 			{
 				return NotFound("Booking not found.");
 			}
 
+			booking.Car = _carService.GetCarById(booking.CarId);
+
 			return View(booking);
 		}
 
-		public IActionResult History(int userId)
+		public IActionResult History(int userId = 1, int pageCount = 1, int pageSize = 3)
 		{
-			var bookings = Garage.GenerateBookings().Where(x => x.UserId == userId);
+			var bookings = _bookingService.GetBookingsByUserId(userId);
+			foreach (var booking in bookings)
+			{
+				booking.Car = _carService.GetCarById(booking.CarId);
+			}
 
-			return View(bookings);
+			var totalPages = (int)Math.Ceiling((double)bookings.Count() / pageSize);
+			pageCount = (pageCount < 1) ? 1 : (pageCount > totalPages ? totalPages : pageCount);
+
+			var modelView = new BookingHistoryViewModel()
+			{
+				Pagination = new PaginationViewModel()
+				{
+					TotalPages = totalPages,
+					PageCount = pageCount,
+					PageSize = pageSize
+				}
+			};
+
+			bookings = bookings.Skip(pageSize * (pageCount - 1)).Take(pageSize);
+
+			modelView.Bookings = bookings;
+
+			return View(modelView);
 		}
 	}
 }

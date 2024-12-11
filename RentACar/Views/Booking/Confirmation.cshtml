@@ -3,16 +3,26 @@
 @{
 	ViewData["Title"] = "Booking Confirmation";
 }
+<section>
+	<div class="container p-5">
+		<h1 class="pb-4">Booking Confirmation</h1>
 
-<h1>Booking Confirmation</h1>
+		<p>Thank you for booking!</p>
 
-<p>Thank you for booking!</p>
+		<div class="car-card-border">
+			<div class="row">
+				<div class="col-lg-4 col-md-6">
+					@Html.Partial("_CarCard", Model.Car)
 
-<div>
-	@Html.Partial("_CarCard", Model.Car);
-
-	<p><strong>Car:</strong> @Model.Car.Make @Model.Car.Model</p>
-	<p><strong>Start Date:</strong> @Model.StartDate.ToShortDateString()</p>
-	<p><strong>End Date:</strong> @Model.EndDate.ToShortDateString()</p>
-	<p><strong>Total Price:</strong> @Model.TotalPrice</p>
-</div>
+				</div>
+				<div class="col-lg-8 col-md-6 pt-3">
+					<h3>Booking Details</h3>
+					<p><strong>Car:</strong> @Model.Car.Make @Model.Car.Model</p>
+					<p><strong>Start Date:</strong> @Model.StartDate.ToShortDateString()</p>
+					<p><strong>End Date:</strong> @Model.EndDate.ToShortDateString()</p>
+					<p><strong>Total Price:</strong> @Model.TotalPrice</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

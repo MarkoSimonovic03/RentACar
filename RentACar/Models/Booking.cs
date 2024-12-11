@@ -68,7 +68,7 @@ namespace RentACar.Models
 
 			if (overlappingBookings)
 			{
-				yield return new ValidationResult("The car is already booked for the selected dates.", new[] { nameof(StartDate), nameof(EndDate) });
+				yield return new ValidationResult("The car is already booked for the selected dates.", new[] { nameof(StartDate) });
 			}
 		}
 	}

@@ -1,29 +1,42 @@
-﻿@model IEnumerable<RentACar.Models.Booking>
+﻿@model RentACar.Models.ViewModels.BookingHistoryViewModel
 
 @{
 	ViewData["Title"] = "Booking Confirmation";
 }
+<section>
+	<div class="container p-5">
+		<h1 class="pb-4">Your Booking History</h1>
 
-<h1>Your Booking History</h1>
-
-
-@if (!Model.Any())
-{
-	<p>You have no past bookings.</p>
-}
-else
-{
-	<div class="booking-history">
-		@foreach (var booking in Model)
+		@if (!Model.Bookings.Any())
 		{
-			<div class="booking-entry">
-				<h2>Booking Details</h2>
-				<p><strong>Start Date;:</strong> @booking.StartDate.ToShortDateString()</p>
-				<p><strong>End Date:</strong> @booking.EndDate.ToShortDateString()</p>
-				<p><strong>Total Price:</strong> @booking.TotalPrice</p>
+			<p>You have no past bookings.</p>
+		}
+		else
+		{
+			<div class="d-flex flex-column gap-3">
+				@foreach (var booking in Model.Bookings)
+				{
 
-				@Html.Partial("_CarCard", booking.Car);
+					<div class="car-card-border">
+						<div class="row">
+							<div class="col-lg-4 col-md-6">
+								@Html.Partial("_CarCard", booking.Car)
+
+							</div>
+							<div class="col-lg-8 col-md-6 pt-3">
+								<h3>Booking Details</h3>
+								<p><strong>Start Date:</strong> @booking.StartDate.ToShortDateString()</p>
+								<p><strong>End Date:</strong> @booking.EndDate.ToShortDateString()</p>
+								<p><strong>Total Price:</strong> @booking.TotalPrice</p>
+							</div>
+						</div>
+					</div>
+				}
 			</div>
 		}
 	</div>
-}
+</section>
+
+<form method="get" asp-controller="Booking" asp-action="History">
+	@Html.Partial("_Pagination", Model.Pagination)
+</form>

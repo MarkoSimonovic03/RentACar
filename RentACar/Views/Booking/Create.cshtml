@@ -36,8 +36,8 @@
 
 <div asp-validation-summary="All" class="validation-summary"></div>
 
-<script>
-	document.addEventListener("DOMContentLoaded", function () {
+@section Scripts {
+	<script>
 		const startDateInput = document.getElementById("StartDate");
 		const endDateInput = document.getElementById("EndDate");
 		const totalPriceInput = document.getElementById("TotalPrice");
@@ -45,26 +45,23 @@
 		const pricePerDay = document.getElementById("PricePerDay").value;
 
 		function recalculateTotalPrice() {
-			console.log('uso')
 			const startDate = new Date(startDateInput.value);
 			const endDate = new Date(endDateInput.value);
 
 			if (!isNaN(startDate) && !isNaN(endDate) && endDate > startDate) {
-				console.log("usp u if")
-				console.log(pricePerDay);
 				totalPriceInput.value = (pricePerDay * ((endDate - startDate) / (1000 * 60 * 60 * 24))).toFixed(2);
-				totalPriceDisplay.textContent = `${totalPriceInput.value} €`;
+				totalPriceDisplay.textContent = `$${totalPriceInput.value}`;
 			}
 			else {
-				totalPriceInput.value = "0.00";
+				totalPriceInput.value = "$0.00";
 				totalPriceDisplay.textContent = "$0.00";
 			}
 		}
 
 		startDateInput.addEventListener("change", recalculateTotalPrice);
 		endDateInput.addEventListener("change", recalculateTotalPrice);
-	});
-</script>
+	</script>
+}
 
 <style>
 	body {

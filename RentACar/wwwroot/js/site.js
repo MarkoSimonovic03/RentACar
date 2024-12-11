@@ -1,4 +1,24 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿const prev = document.getElementById("prev");
+const next = document.getElementById("next");
 
-// Write your JavaScript code.
+const pageCount = document.getElementById("pageCount");
+
+const btns = document.querySelectorAll('.btn-page');
+
+btns.forEach(button => {
+	button.addEventListener('click', () => {
+		pageCount.value = Number(button.dataset.count);
+	});
+});
+
+if (prev) {
+	prev.addEventListener('click', function () {
+		pageCount.value = Number(pageCount.value) - 1;
+	})
+}
+
+if (next) {
+	next.addEventListener('click', function () {
+		pageCount.value = Number(pageCount.value) + 1;
+	})
+}

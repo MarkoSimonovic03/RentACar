@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using RentACar.Services;
+
 namespace RentACar
 {
 	public class Program
@@ -8,6 +11,12 @@ namespace RentACar
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+
+			builder.Services.AddDbContext<RentACarContext>(
+				op => op.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+			builder.Services.AddScoped<ICarCervice, CarService>();
+			builder.Services.AddScoped<IBookingService, BookingService>();
 
 			var app = builder.Build();
 
